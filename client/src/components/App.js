@@ -31,6 +31,10 @@ const horses = [
   },
 ];
 
+(async () => {
+  const res = await fetch("http://localhost:3002");
+})();
+
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   return (
