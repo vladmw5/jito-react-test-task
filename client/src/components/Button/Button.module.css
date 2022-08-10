@@ -1,0 +1,16 @@
+.button {
+  width: 160px;
+  height: 52px;
+  background-color: var(--btn-normal-color);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+
+  transition: background-color var(--trans-time) var(--trans-func);
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--btn-active-color);
+}
+

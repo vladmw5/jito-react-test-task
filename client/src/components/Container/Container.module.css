@@ -1,0 +1,5 @@
+.container {
+  width: calc(100% - 30px);
+  padding: 0 15px;
+  margin: 0 auto;
+}
