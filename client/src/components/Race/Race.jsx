@@ -1,13 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import s from "./Race.module.css";
 import RaceChart from "../RaceChart";
 import { getHorses, getRace } from "../../redux/horses/horseSelectors";
-import { WSContext } from "../../websocket/WebSocket";
 
 const Race = () => {
-  const socket = useContext(WSContext);
   const horses = useSelector(getHorses);
   const isRacing = useSelector(getRace);
   const [winners, setWinners] = useState([]);
@@ -15,6 +13,7 @@ const Race = () => {
   const data = horses.map((horse) => horse.distance);
 
   useEffect(() => {
+    //This cycle registers our winners
     horses.forEach((horse) => {
       if (
         horse.distance >= 1000 &&
@@ -23,13 +22,13 @@ const Race = () => {
         setWinners([...winners, horse]);
     });
 
+    //This one alerts our winners and reloads the page so that we can race again
     if (
       isRacing &&
       horses.length > 0 &&
       horses.every((horse) => horse.distance >= 1000) &&
       winners.length === horses.length
     ) {
-      socket.off("ticker");
       alert(
         `We have the winners!\n${winners
           .map((horse, i) => `${i + 1}. ${horse.name}`)
@@ -37,7 +36,7 @@ const Race = () => {
       );
       document.location.reload();
     }
-  }, [isRacing, winners, horses, socket]);
+  }, [isRacing, winners, horses]);
 
   return (
     <section className={s.race}>

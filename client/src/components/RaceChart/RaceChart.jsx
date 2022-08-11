@@ -1,6 +1,7 @@
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import ChartJS from "chart.js/auto";
+import PropTypes from "prop-types";
 import { colors } from "../../utils/colors";
 
 ChartJS.register(ChartDataLabels);
@@ -97,6 +98,11 @@ const RaceChart = ({ labels, data }) => {
       data={barChartData}
     />
   );
+};
+
+RaceChart.propTypes = {
+  labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  data: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default RaceChart;
