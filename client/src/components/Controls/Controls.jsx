@@ -1,13 +1,17 @@
+import { useSelector } from "react-redux";
+
 import s from "./Controls.module.css";
 import Button from "../Button";
+import { getIsConnected } from "../../redux/horses/horseSelectors";
 
-const Controls = ({ isConnected }) => {
+const Controls = () => {
+  const isConnected = useSelector(getIsConnected);
   return (
     <section className={s.controls}>
       {isConnected ? (
         <Button />
       ) : (
-        <p className={s.noConnectionText}>No Connection with the Server!</p>
+        <p className={s.noConnectionText}>No connection with the Server!</p>
       )}
     </section>
   );

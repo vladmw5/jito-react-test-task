@@ -14,3 +14,13 @@
   background-color: var(--btn-active-color);
 }
 
+.disabled {
+  composes: button;
+  cursor: default;
+  background-color: var(--btn-disabled-color);
+}
+
+.disabled:hover,
+.disabled:focus {
+  background-color: var(--btn-disabled-color);
+}

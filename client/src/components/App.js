@@ -1,47 +1,41 @@
-import { useState } from "react";
+import { useEffect, useContext } from "react";
+import { useDispatch } from "react-redux";
 
 import s from "./App.module.css";
 import Controls from "./Controls/";
 import Race from "./Race";
-
-const horses = [
-  {
-    name: "Princess Diana",
-    distance: 400,
-  },
-  {
-    name: "Cricket",
-    distance: 360,
-  },
-  {
-    name: "Rebel",
-    distance: 720,
-  },
-  {
-    name: "Lucy",
-    distance: 140,
-  },
-  {
-    name: "Lacey",
-    distance: 800,
-  },
-  {
-    name: "Ginger",
-    distance: 550,
-  },
-];
-
-(async () => {
-  const res = await fetch("http://localhost:3002");
-})();
+import horseActions from "../redux/horses/horseActions";
+import { WSContext } from "../websocket/WebSocket";
 
 function App() {
-  const [isConnected, setIsConnected] = useState(false);
+  const socket = useContext(WSContext);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      dispatch(horseActions.setConnectionTo(true));
+    });
+
+    socket.on("disconnect", () => {
+      dispatch(horseActions.setConnectionTo(false));
+    });
+
+    socket.on("ticker", (response) => {
+      dispatch(horseActions.setHorsesTo(response));
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("ticker");
+    };
+  }, [dispatch, socket]);
+
   return (
     <div className={s.container}>
       <div className={s.app}>
-        <Controls isConnected={isConnected} />
-        <Race horses={horses} />
+        <Controls socket={socket} />
+        <Race />
       </div>
     </div>
   );

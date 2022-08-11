@@ -1,7 +1,7 @@
 import { Bar } from "react-chartjs-2";
-import { getRandomHexColor } from "../../utils/getRandomHexColor";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import ChartJS from "chart.js/auto";
+import { colors } from "../../utils/colors";
 
 ChartJS.register(ChartDataLabels);
 
@@ -16,7 +16,7 @@ const RaceChart = ({ labels, data }) => {
         data: data,
 
         borderColor: "transparent",
-        backgroundColor: data.map(() => getRandomHexColor()),
+        backgroundColor: colors.slice(0, data.length),
         borderRadius: "6",
         fill: true,
         borderJoinStyle: "bevel",
